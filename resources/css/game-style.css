@@ -1,0 +1,12 @@
+body {
+	#canvases {
+	  height: 300px;
+	  width: 300px;
+	}
+	#buttons {
+	  left: 350px;
+	}
+	#central {
+		top: 350px;
+	}
+}
