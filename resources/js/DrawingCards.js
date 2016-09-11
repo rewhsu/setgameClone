@@ -13,14 +13,57 @@ Object.prototype.getCardById = function(value){
 	}
 };
 
+function getCardByCanvasId(cIndex){
+	var stageSlots = JSON.parse(localStorage.getItem('stageSlots'));
+	var card = getCardById(stageSlots[cIndex]);
+}
+
+function getCanvas(cIndex){
+	return document.getElementById('canvas-'+cIndex+'-back');
+}
+
+function redrawCanvas(cIndex){
+	
+}
+
+function resetCanvasObject(cIndex){
+	var myCanvas = getCanvas(cIndex);
+	var ctx = myCanvas.getContext("2d");
+	ctx.clearRect(0, 0, myCanvas.width, myCanvas.height);
+}
+
+function isMatch(){
+	var stageSlots = JSON.parse(localStorage.getItem('stageSlots'));
+	var selectedCanvases = JSON.parse(localStorage.getItem('selectedCanvases'));
+	var selectedCanvasesCopy = selectedCanvases.slice();
+	var discardCards = JSON.parse(localStorage.getItem('discardPile'));
+	setLocalItem('deleteBool', JSON.stringify([true]));
+	document.getElementById('gameStage').click();
+	var canvasObject = createNew();
+	for(var i = 0; i < 3; i++){
+		var selectedCanvasIndex = selectedCanvasesCopy[i];
+		canvasObject.getCanvas(selectedCanvasIndex);
+		discardCards.push(getCardById(selectedCanvasIndex));
+		resetCanvasObject(selectedCanvasIndex);
+		delete stageSlots[selectedCanvasIndex];
+		canvasObject.deselectCard(selectedCanvasIndex);
+	}
+	setLocalItem('discardPile', discardCards);
+	localStorage.setItem('selectedCanvases', JSON.stringify([]));
+	setLocalItem('stageSlots', stageSlots);
+}
+
 function compare(){
-	console.log(compareCards());
+	alert(compareCards());
+	if(compareCards() === true){
+		isMatch();
+	}
 }
 
 function compareCards(){
 	var stageSlots = JSON.parse(localStorage.getItem('stageSlots'));
 	var cardArr = [];
-	var indexArr = JSON.parse(localStorage.getItem('selectedCards'));
+	var selectedCanvases = JSON.parse(localStorage.getItem('selectedCanvases'));
   	var noMatch = "";
   	var allProps = {
     	colors: [],
@@ -28,7 +71,7 @@ function compareCards(){
     	numbers: [],
     	shapes: [],
   	};
-	  indexArr.forEach(function(index) {
+	  selectedCanvases.forEach(function(index) {
 	  	var card = getCardById(stageSlots[index]);
 	    if (allProps.colors.indexOf(card.color) === -1) {
 	      allProps.colors.push(card.color);
@@ -93,6 +136,7 @@ function getRandomCard(){
 
 function assignRandomCards(){
 	var stageSlots = JSON.parse(localStorage.getItem('stageSlots'));
+	var canvasObjects = [];
 	for(var i = 0; i < stageSlots.length; i++){
 		if(stageSlots[i] === null || stageSlots[i] === undefined){
 			var card = getRandomCard();
@@ -104,10 +148,11 @@ function assignRandomCards(){
 			newCanvas.ctx.strokeRect(0, 0, 50, 50);
 			newCanvas.ctx.stroke();
 			localStorage.setItem('assignedCards', JSON.stringify(stageSlots));
-			// canvases.push(newCanvas);	
+			canvasObjects.push(newCanvas);	
 		}
 	}
 	localStorage.setItem('stageSlots', JSON.stringify(stageSlots));
+	localStorage.setItem('canvasObjects', JSON.stringify(canvasObjects));
 }
 
 var CardCanvasObject = function(myObj , i){

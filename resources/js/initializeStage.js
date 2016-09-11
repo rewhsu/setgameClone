@@ -1,3 +1,11 @@
+function createNew(){
+	localStorage.setItem('selectedCanvases', JSON.stringify([]));
+	var selectorCanvas = new SelectorCanvases();
+	selectorCanvas.addDivClickEvent();
+	localStorage.setItem('deleteBool', JSON.stringify([false]));
+	return selectorCanvas;
+};
+
 function createHtmlCanvases(index){
 	loadCanvasHtml(index, true);
 	loadCanvasHtml(index, false);
@@ -64,7 +72,7 @@ var SelectorCanvases = function(){
 	this.div = document.getElementById('gameStage');
 	this.deck = JSON.parse(localStorage.deck);
 	this.stageSlots = JSON.parse(localStorage.stageSlots);
-	this.selectedCanvases = [];
+	this.selectedCanvases = JSON.parse(localStorage.selectedCanvases);
 };
 
 SelectorCanvases.prototype.getCanvas = function(cNum){
@@ -88,7 +96,7 @@ SelectorCanvases.prototype.selectCard = function(cNum){
     this.ctx.stroke();
     this.ctx.fill();
     this.selectedCanvases.push(cNum);
-    console.log(this.selectedCanvases);
+    setLocalItem('selectedCanvases', this.selectedCanvases);
 };
 
 SelectorCanvases.prototype.deselectCard = function(cNum){
@@ -98,15 +106,21 @@ SelectorCanvases.prototype.deselectCard = function(cNum){
 	this.ctx.stroke();
     this.ctx.fill();
     var splice = this.selectedCanvases.splice(this.selectedCanvases.indexOf(cNum), 1);
-    console.log(splice);
+    setLocalItem('selectedCanvases', this.selectedCanvases);
 };
 
 SelectorCanvases.prototype.addDivClickEvent = function(){
 	var objectScope = this;
 	var myDiv = document.getElementById('gameStage');
-  	myDiv.addEventListener('click', function(event) {
-  		var selectedArray = JSON.parse(localStorage.selectedCards);
-	  	var selectedLength = JSON.parse(localStorage.selectedCards).length;
+  	myDiv.addEventListener('click', function e(event) {
+  		var deleteBool = JSON.parse(localStorage.getItem('deleteBool'))[0];
+  		if (deleteBool){
+  			this.removeEventListener('click', e);
+  			setLocalItem('deleteBool', JSON.stringify([false]));
+  			return true;
+  		}
+  		var selectedArray = JSON.parse(localStorage.selectedCanvases);
+	  	var selectedLength = JSON.parse(localStorage.selectedCanvases).length;
 	  	var selectedHtml = document.getElementById('p_test1').innerHTML;
 	    var clickToCanvasNum = objectScope.canvasClick(event.pageX, event.pageY);
 	    var myCanvas = objectScope.getCanvas(clickToCanvasNum);
@@ -114,20 +128,19 @@ SelectorCanvases.prototype.addDivClickEvent = function(){
 	      if(selectedLength === 2 && objectScope.isSelected(clickToCanvasNum) === false){
 	      	objectScope.selectCard(clickToCanvasNum);
 	      	//selectedArray.push(clickToCanvasNum);
-	      	alert("compare these cards");
+	      	//alert("compare these cards");
 	      }
 	      else{
 	      	objectScope.selectCard(clickToCanvasNum);
 	      }
 	    }
 	    else if (objectScope.isSelected(clickToCanvasNum) === true){
-	    	selectedArray.splice(selectedArray.indexOf(clickToCanvasNum),1);
+	    	//selectedArray.splice(selectedArray.indexOf(clickToCanvasNum),1);
 	    	objectScope.deselectCard(clickToCanvasNum);
 	    }
 	    else if (selectedLength === 3 && objectScope.isSelected(clickToCanvasNum) === false){
 	    	alert("More than three cards staged already");
 	    };
-	    setLocalItem('selectedCards', objectScope.selectedCanvases);
   }, false);
 };
 
@@ -176,6 +189,6 @@ SelectorCanvases.prototype.canvasClick = function(abs_x, abs_y) {
 	      cnum = 8;
 	    }
 	  }
-	  alert("Clicked on: myCanvas" + cnum + " x:" + x + " y:" + y);
+	  //alert("Clicked on: myCanvas" + cnum + " x:" + x + " y:" + y);
 	  return cnum;
 };
