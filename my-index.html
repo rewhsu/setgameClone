@@ -18,7 +18,7 @@
 		<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 			<div id = "buttons">
 				<button id ="b1" onclick="startGame()">Start Game</button>
-				<button id = "b2" onclick="updateText('p1', 'deck')">Update p1 Text</button>
+				<button id = "b2" onclick="reload()">Reset Game</button>
 				<button id = "b3" onclick="updateText('p_test', 'test')">Update test Text</button>
 				<button id = "b4" onclick="assignRandomCards()">Assign Random Cards</button>
 				<button id = "b5" onclick="compare()">Compare Cards</button>
@@ -39,8 +39,9 @@
 					<a href="/">Home</a>
 				</p>
 				<p>
-					<a href="/contact">Contact</a>
+					Remaining Cards
 				</p>
+				<p id = "cards_left">81</p>
 			</nav>
 			<p id = "p1">deck</p>
 			<p id = "p_active">active</p>
