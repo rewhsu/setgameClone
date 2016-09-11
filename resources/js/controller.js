@@ -8,9 +8,30 @@ function startGame(){
 	}
 	else{
 		reset();
-		alert("Time is set to : 30 seconds");
 		run();
 	}
+}
+
+// function setUserTime(){
+	// var time_mmss = document.getElementById('usr_time').value;
+	// var seconds = convert_mmss_to_secs(time_mmss);
+	// localStorage.setItem('usr_time', JSON.stringify(seconds));
+// }
+function setUserTime(){
+	var response = prompt("Please enter your desired duration", "mm:ss");
+	if (response != null) {
+		var secs = convert_mmss_to_secs(response);
+	    localStorage.setItem('usr_time',JSON.stringify(secs));
+	}
+	return response;
+}
+
+function convert_mmss_to_secs(myStr){
+	var ind = myStr.search(':');
+	var mins = parseInt(myStr.substring(0, ind));
+	var secs = parseInt(myStr.substring(ind + 1));
+	var totalSecs = mins * 60 + secs;
+	return totalSecs;
 }
 
 function createNewFrontCanvas(){
@@ -31,24 +52,41 @@ function resetStageSlots(){
 	localStorage.setItem('stageSlots', JSON.stringify(stageSlots));
 }
 
-function preserveHighScore(){
-	//Save data before reset
-	if(JSON.parse(localStorage.getItem('high_score')) === "undefined" || JSON.parse(localStorage.getItem('high_score')) === null){
-		var highScore = 0;
-	}
-	else{
-		var highScore = JSON.parse(localStorage.getItem('high_score'));
-	}
-	localStorage.setItem('high_score', JSON.stringify(highScore));
-}
+// function preserveHighScore(){
+	// //Save data before reset
+	// if(JSON.parse(localStorage.getItem('high_score')) === "undefined" || JSON.parse(localStorage.getItem('high_score')) === null){
+		// var highScore = 0;
+	// }
+	// else{
+		// var highScore = JSON.parse(localStorage.getItem('high_score'));
+	// }
+	// localStorage.setItem('high_score', JSON.stringify(highScore));
+// }
+// 
+// function preserveUserTime(){
+	// //Save data before reset
+	// var usrTime = JSON.parse(localStorage.getItem('usr_time'));
+	// if(usrTime == undefined || usrTime == null){
+		// var utime = setUserTime();
+	// }
+	// else{
+		// var utime = usrTime;
+	// }
+	// console.log("Time is set to : " + utime + " mm:ss");
+	// localStorage.setItem('usr_time', JSON.stringify(utime));
+// }
 
 function reset(){
 	var time = JSON.parse(localStorage.getItem('timer'));
 	//Stop timer
+	localStorage.removeItem('selectedCanvases');
+	localStorage.removeItem('discardPile');
+	localStorage.removeItem('cards_left');
+	localStorage.removeItem('points');
+	localStorage.removeItem('start');
 	clearInterval(time);
-	//Clear page storage
-	localStorage.clear();
-	preserveHighScore();
+	// preserveHighScore();
+	// preserveUserTime();
 	//Initialize initial page storage values
 	localStorage.setItem('selectedCanvases', JSON.stringify([]));
 	localStorage.setItem('discardPile', JSON.stringify([]));
@@ -157,7 +195,14 @@ function startTimer(duration, display) {
 }
 
 function startTime () {
-    var threeMinutes = 60 * .5,
-        display = document.querySelector('#time');
-    startTimer(threeMinutes, display);
+	try{
+		JSON.parse(localStorage.getItem('usr_time'));
+		var user_time = JSON.parse(localStorage.getItem('usr_time'));
+		// var user_secs = convert_mmss_to_secs(user_time);
+	}
+	catch(e){
+		setUserTime();
+	}
+    var display = document.querySelector('#time');
+    startTimer(user_time, display);
 };
