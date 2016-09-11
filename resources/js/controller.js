@@ -148,7 +148,7 @@ function assignRandomCards(reset){
 function compare(){
 	if(compareCards() === true){
 		//alert(true);
-		alert("Congrats Gabby! You've found one!");
+		console.log("Congrats, you've found one!");
 		isMatch();
 	}
 	else{
