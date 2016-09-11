@@ -1,12 +1,7 @@
-function createNew(){
-	localStorage.setItem('selectedCanvases', JSON.stringify([]));
-	var selectorCanvas = new SelectorCanvases();
-	selectorCanvas.addDivClickEvent();
-	localStorage.setItem('deleteBool', JSON.stringify([false]));
-	return selectorCanvas;
-};
+
 
 function createHtmlCanvases(index){
+	// Create canvases for drawing and displaying card selection
 	loadCanvasHtml(index, true);
 	loadCanvasHtml(index, false);
 };
@@ -121,7 +116,7 @@ SelectorCanvases.prototype.addDivClickEvent = function(){
   		}
   		var selectedArray = JSON.parse(localStorage.selectedCanvases);
 	  	var selectedLength = JSON.parse(localStorage.selectedCanvases).length;
-	  	var selectedHtml = document.getElementById('p_test1').innerHTML;
+	  	//var selectedHtml = document.getElementById('p_test1').innerHTML;
 	    var clickToCanvasNum = objectScope.canvasClick(event.pageX, event.pageY);
 	    var myCanvas = objectScope.getCanvas(clickToCanvasNum);
 	    if(selectedLength < 3 && objectScope.isSelected(clickToCanvasNum) === false){

@@ -18,15 +18,14 @@
 		<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 			<div id = "buttons">
 				<button id ="b1" onclick="startGame()">Start Game</button>
-				<button id = "b2" onclick="reload()">Reset Game</button>
-				<button id = "b3" onclick="updateText('p_test', 'test')">Update test Text</button>
-				<button id = "b4" onclick="assignRandomCards()">Assign Random Cards</button>
-				<button id = "b5" onclick="compare()">Compare Cards</button>
+				<button id = "b2" onclick="reset()">Reset Game</button>
+				<button id = "b3" onclick="assignRandomCards()">Assign Random Cards</button>
+				<button id = "b4" onclick="compare()">Compare Cards</button>
 			</div>
-			<label for="checkbox1" onclick="disableImages();">
+			<!-- <label for="checkbox1" onclick="disableImages();">
   					<input type="checkbox" id="checkbox1" name="checkbox1" title="Disable Images">
   					Disable Images
-			</label>
+			</label> -->
 	</head>
 
 	<body>
@@ -36,27 +35,25 @@
 			</header>
 			<nav>
 				<p>
-					<a href="/">Home</a>
+					&copy; Copyright  by Andrew Hsu
 				</p>
+				<div>Game ends in: <span id="time"></span> minutes!</div>
 				<p>
 					Remaining Cards
 				</p>
 				<p id = "cards_left">81</p>
-			</nav>
-			<p id = "p1">deck</p>
-			<p id = "p_active">active</p>
-			<p id = "p_staged">staged</p>
-			<p id = "p_discard">discard</p>
-			<p id = "p_test">test</p>
-			<p id = "p_test1">test1</p>
-			<div id = "canvases" style="position: absolute;"></div>
-			<footer>
 				<p>
-					&copy; Copyright  by Andrew Hsu
+					Points
 				</p>
-			</footer>
-			<div id = gameStage style="position: absolute;"></div>
-		</div>
+				<p id = "points">0</p>
+				<p>
+					High Score
+				</p>
+				<p id = "high_score">0</p>
+			</nav>
+			<div id = "canvases" style="position: absolute;"></div>
+			<div id = gameStage style="position: absolute;"></div>	
+		</div>	
 		<script src="resources/js/initializeDeck.js"></script>
 		<script src="resources/js/controller.js"></script>
 		<script src="resources/js/html-interface.js"></script>
