@@ -13,3 +13,4 @@ function getLocalItem(item){
 function updateText(id, item){
 	document.getElementById(id).innerHTML = localStorage.getItem(item);
 }
+

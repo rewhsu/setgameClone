@@ -22,7 +22,7 @@ function getCanvas(cIndex){
 	return document.getElementById('canvas-'+cIndex+'-back');
 }
 
-function resetCanvasObject(cIndex){
+function resetBackCanvas(cIndex){
 	var myCanvas = getCanvas(cIndex);
 	var ctx = myCanvas.getContext("2d");
 	ctx.clearRect(0, 0, myCanvas.width, myCanvas.height);
@@ -33,27 +33,39 @@ function isMatch(){
 	var selectedCanvases = JSON.parse(localStorage.getItem('selectedCanvases'));
 	var selectedCanvasesCopy = selectedCanvases.slice();
 	var discardCards = JSON.parse(localStorage.getItem('discardPile'));
-	var cardsLeft = JSON.parse(localStorage.getItem('cards_left'))[0];
+	var cardsLeft = JSON.parse(localStorage.getItem('cards_left'));
+	var points = JSON.parse(localStorage.getItem('points'));
+	var highScore = JSON.parse(localStorage.getItem('high_score'));
 	console.log(cardsLeft);
-	setLocalItem('deleteBool', JSON.stringify([true]));
-	document.getElementById('gameStage').click();
-	var canvasObject = createNew();
+	//Delete click event
+	deleteClickEvent();
+	//New canvas
+	var canvasObject = createNewFrontCanvas();
 	for(var i = 0; i < 3; i++){
 		var selectedCanvasIndex = selectedCanvasesCopy[i];
+		//Get canvas object
 		canvasObject.getCanvas(selectedCanvasIndex);
+		//Add matched cards to discard data
 		discardCards.push(stageSlots[selectedCanvasIndex]);
-		resetCanvasObject(selectedCanvasIndex);
+		//Reset canvas
+		resetBackCanvas(selectedCanvasIndex);
 		delete stageSlots[selectedCanvasIndex];
 		canvasObject.deselectCard(selectedCanvasIndex);
 	}
 	cardsLeft -= 3;
-	console.log(cardsLeft);
+	points += 1;
+	if(points >= highScore){
+		highScore++;
+	}
 	setLocalItem('discardPile', discardCards);
 	localStorage.setItem('selectedCanvases', JSON.stringify([]));
 	setLocalItem('stageSlots', stageSlots);
-	localStorage.setItem('cards_left', JSON.stringify([cardsLeft]));
+	localStorage.setItem('cards_left', JSON.stringify(cardsLeft));
 	document.getElementById('cards_left').innerHTML = cardsLeft;
-	
+	localStorage.setItem('points', JSON.stringify(points));
+	document.getElementById('points').innerHTML = points;
+	setLocalItem('high_score', highScore);
+	document.getElementById('high_score').innerHTML = highScore;
 }
 
 function compareCards(){
