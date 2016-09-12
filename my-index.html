@@ -17,12 +17,9 @@
 		<link rel="shortcut icon" href="/favicon.ico">
 		<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 			<div id = "buttons">
-				<button id ="b1" onclick="startGame()">Start Game</button>
-				<button id = "b2" onclick="reset()">Reset Game</button>
-				<button id = "b3" onclick="assignRandomCards()">Assign Random Cards</button>
-				<button id = "b4" onclick="compare()">Compare Cards</button>
-				<button id = "b5" onclick="setUserTime()">Set Time Duration</button>
-				<button id = "b6" onclick="checkIfSetAlert()">Check if sets exist</button>
+				<button id = "b1" onclick="checkIfSetAlert()">Check if sets exist</button>
+				<button id = "b2" onclick="setUserTime()">Set Time Duration</button>
+				<button id = "b3" onclick="resetHighScore()">Reset High Score</button>
 			</div>
 			<!-- <label for="checkbox1" onclick="disableImages();">
   					<input type="checkbox" id="checkbox1" name="checkbox1" title="Disable Images">
@@ -47,13 +44,17 @@
 				<p>
 					Points
 				</p>
-				<p id = "points">0</p>
+				<p id = "points"></p>
 				<p>
 					High Score
 				</p>
 				<p id = "high_score">0</p>
 			</nav>
 			<div id = "canvases" style="position: absolute;"></div>
+			<div id = "buttons1">
+				<button id ="b4" onclick="startGame()">Start Game</button>
+				<button id = "b5" onclick="compare()">Compare Cards</button>
+			</div>
 			<div id = gameStage style="position: absolute;"></div>	
 		</div>	
 		<script src="resources/js/initializeDeck.js"></script>

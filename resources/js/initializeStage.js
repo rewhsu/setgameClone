@@ -108,10 +108,10 @@ SelectorCanvases.prototype.addDivClickEvent = function(){
 	var objectScope = this;
 	var myDiv = document.getElementById('gameStage');
   	myDiv.addEventListener('click', function e(event) {
-  		var deleteBool = JSON.parse(localStorage.getItem('deleteBool'))[0];
+  		var deleteBool = JSON.parse(localStorage.getItem('deleteBool'));
   		if (deleteBool){
   			this.removeEventListener('click', e);
-  			setLocalItem('deleteBool', JSON.stringify([false]));
+  			setLocalItem('deleteBool', JSON.stringify(false));
   			return true;
   		}
   		var selectedArray = JSON.parse(localStorage.selectedCanvases);

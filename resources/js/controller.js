@@ -1,21 +1,33 @@
 /**
  * @author Andrew
  */
+
+document.addEventListener('DOMContentLoaded', function() {
+	var highScore = JSON.parse(localStorage.getItem('high_score'));
+	localStorage.setItem('points', JSON.stringify(0));
+	localStorage.setItem('isRunning', JSON.stringify(true));
+	document.getElementById('points').innerHTML = 0;
+	document.getElementById('high_score').innerHTML = highScore;
+	document.getElementById('gameStage').innerHTML = "";
+	createDeck();
+    setUserTime();
+    run();
+    startTime();
+}, false);
+
 function startGame(){
 	//Create game stage
-	if(JSON.parse(localStorage.getItem('start')) === true){
-		localStorage.setItem('start', JSON.stringify(false));
+	if(confirm("Are you sure you want to quit your current game?")){
 		reset();
-		localStorage.setItem('usr_time', JSON.stringify(30));
-		//setUserTime();
-		run();
-		startTime();
-		
+	    run();
+	    startTime();
 	}
-	else{
-		reset();
-		run();
-		startTime();
+}
+
+function resetHighScore(){
+	if(confirm("Are you sure you want to reset your high score?")){
+		localStorage.setItem('high_score', JSON.stringify(0));
+		document.getElementById('high_score').innerHTML = 0;
 	}
 }
 
@@ -37,6 +49,11 @@ function checkIfSetAlert(){
 	var results = checkIfSet();
 	if(results !== false){
 		results = results.join("\n");
+	}
+	else{
+		alert("No Match... resetting stage");
+		resetWithoutPoints();
+		run();
 	}
 	alert(results);
 }
@@ -68,6 +85,7 @@ function checkIfSet(){
 // }
 
 function setUserTime(){
+	reset();
 	var response = prompt("Please enter your desired duration", "mm:ss");
 	if (response != null) {
 		var secs = convert_mmss_to_secs(response);
@@ -87,9 +105,10 @@ function convert_mmss_to_secs(myStr){
 function createNewFrontCanvas(){
 	//Reset selection canvases
 	localStorage.setItem('selectedCanvases', JSON.stringify([]));
+	deleteClickEvent();
 	var selectorCanvas = new SelectorCanvases();
 	selectorCanvas.addDivClickEvent();
-	localStorage.setItem('deleteBool', JSON.stringify(false));
+	// localStorage.setItem('deleteBool', JSON.stringify(false));
 	return selectorCanvas;
 };
 
@@ -142,38 +161,56 @@ function reset(){
 	localStorage.setItem('discardPile', JSON.stringify([]));
 	localStorage.setItem('cards_left', JSON.stringify(81));
 	localStorage.setItem('points', JSON.stringify(0));
-	
+	//Delete click event
+	deleteClickEvent();
 	//Set HTML elements
 	document.getElementById('cards_left').innerHTML = 81;
 	document.getElementById('points').innerHTML = 0;
 	document.getElementById('gameStage').innerHTML = "";
-	//Delete click event
-	deleteClickEvent();
 	//Reset stage
 	resetStageSlots();
 	//Create deck object and store in page
-	createDeck();
+	//createDeck();
+}
+
+function resetWithoutPoints(){
+
+	localStorage.removeItem('selectedCanvases');
+	localStorage.removeItem('discardPile');
+	localStorage.removeItem('cards_left');
+	//Initialize initial page storage values
+	localStorage.setItem('selectedCanvases', JSON.stringify([]));
+	localStorage.setItem('discardPile', JSON.stringify([]));
+	localStorage.setItem('cards_left', JSON.stringify(81));
+	//Delete click event
+	deleteClickEvent();
+	//Set HTML elements
+	document.getElementById('cards_left').innerHTML = 81;
+	document.getElementById('gameStage').innerHTML = "";
+	//Reset stage
+	resetStageSlots();
+	//Create deck object and store in page
 }
 
 function deleteClickEvent(){
+	localStorage.setItem('deleteBool', JSON.stringify(true));
 	//Delete click event
-	setLocalItem('deleteBool', JSON.stringify(true));
 	document.getElementById('gameStage').click();	
+	localStorage.setItem('deleteBool', JSON.stringify(false));
 }
 
 function run(){
 	//Start Game
-	localStorage.setItem('start', JSON.stringify(true));
 	var myDeck = JSON.parse(localStorage.deck);
 	createNewFrontCanvas();
 	assignRandomCards();
 }
 
 function assignRandomCards(reset){
-	if(JSON.parse(localStorage.getItem('reset') === true)){
-		reset();
-		localStorage.setItem('start', JSON.stringify(false));
-	}
+	// if(JSON.parse(localStorage.getItem('reset') === true)){
+		// reset();
+		// localStorage.setItem('start', JSON.stringify(false));
+	// }
 	var stageSlots = JSON.parse(localStorage.getItem('stageSlots'));
 	var canvasObjects = [];
 	for(var i = 0; i < stageSlots.length; i++){
@@ -199,19 +236,39 @@ function compare(){
 		//alert(true);
 		console.log("Congrats, you've found one!");
 		isMatch();
+		assignRandomCards();
 	}
 	else{
 		alert(compareStagedCards());
 	}
 }
 
+function gameEnds(){
+	alert("Game Over!");
+        	highScore();
+        	alert('Press OK to Reset and Play Again');
+        	reset();
+        	run();
+        	startTime();
+        	clearInterval(interval);
+}
+
+function highScore(){
+	var gotNewHighScore = checkNewHighScore();
+	if(gotNewHighScore){
+		alert("NEW HIGH SCORE!!!!");
+	}
+} 
+
 function checkNewHighScore(){
 	var points = JSON.parse(localStorage.getItem('points'));
+	localStorage.setItem('points', JSON.stringify(0));
 	var highScore = JSON.parse(localStorage.getItem('high_score'));
 	if(highScore < points){
 		localStorage.setItem('high_score', JSON.stringify(points));
+		return true;
 	};
-	localStorage.setItem('points', JSON.stringify(0));
+	return false;
 }
 
 function startTimer(duration, display) {
@@ -227,35 +284,14 @@ function startTimer(duration, display) {
         display.textContent = minutes + ":" + seconds;
         
         if (--timer < 0) {
-        	alert("Game Over!");
-        	highScore();
-        	reset();
-        	clearInterval(interval);
+        	gameEnds();
         }
     }, 1000);
-	function highScore(){
-		var gotNewHighScore = checkNewHighScore();
-		if(gotNewHighScore){
-			alert("NEW HIGH SCORE!!!!");
-		}
-		clearInterval(interval);
-	} 
 	localStorage.setItem('timer', JSON.stringify(interval));
 }
 
 function startTime () {
-	try{
-		JSON.parse(localStorage.getItem('usr_time'));
-		var user_time = JSON.parse(localStorage.getItem('usr_time'));
-		// var user_secs = convert_mmss_to_secs(user_time);
-	}
-	catch(e){
-		setUserTime();
-	}
+	var user_time = JSON.parse(localStorage.getItem('usr_time'));
     var display = document.querySelector('#time');
     startTimer(user_time, display);
 };
-
-function setFinder(){
-	
-}
