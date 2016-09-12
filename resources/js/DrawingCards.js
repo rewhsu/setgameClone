@@ -34,7 +34,7 @@ function isMatch(){
 	var selectedCanvasesCopy = selectedCanvases.slice();
 	var discardCards = JSON.parse(localStorage.getItem('discardPile'));
 	var cardsLeft = JSON.parse(localStorage.getItem('cards_left'));
-	var points = JSON.parse(localStorage.getItem('points'));
+	// var points = JSON.parse(localStorage.getItem('points'));
 	var highScore = JSON.parse(localStorage.getItem('high_score'));
 	console.log(cardsLeft);
 	//Delete click event
@@ -53,17 +53,18 @@ function isMatch(){
 		canvasObject.deselectCard(selectedCanvasIndex);
 	}
 	cardsLeft -= 3;
-	points += 1;
-	if(points >= highScore){
-		highScore++;
-	}
+	addPoints(1);
+	// points += 1;
+	// if(points >= highScore){
+		// highScore++;
+	// }
 	setLocalItem('discardPile', discardCards);
 	localStorage.setItem('selectedCanvases', JSON.stringify([]));
 	setLocalItem('stageSlots', stageSlots);
 	localStorage.setItem('cards_left', JSON.stringify(cardsLeft));
-	document.getElementById('cards_left').innerHTML = cardsLeft;
-	localStorage.setItem('points', JSON.stringify(points));
-	document.getElementById('points').innerHTML = points;
+	// document.getElementById('cards_left').innerHTML = cardsLeft;
+	// localStorage.setItem('points', JSON.stringify(points));
+	// document.getElementById('points').innerHTML = points;
 	setLocalItem('high_score', highScore);
 	document.getElementById('high_score').innerHTML = highScore;
 }

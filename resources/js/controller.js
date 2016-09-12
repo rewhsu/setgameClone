@@ -5,23 +5,41 @@
 document.addEventListener('DOMContentLoaded', function() {
 	var highScore = JSON.parse(localStorage.getItem('high_score'));
 	localStorage.setItem('points', JSON.stringify(0));
-	localStorage.setItem('isRunning', JSON.stringify(true));
+	localStorage.setItem('isRunning', JSON.stringify(false));
 	document.getElementById('points').innerHTML = 0;
-	document.getElementById('high_score').innerHTML = highScore;
+	// document.getElementById('high_score').innerHTML = highScore;
 	document.getElementById('gameStage').innerHTML = "";
 	createDeck();
-    setUserTime();
-    run();
-    startTime();
+	var lastDuration = JSON.parse(localStorage.getItem('duration'));
+	if (lastDuration === undefined){
+		setUserTime();
+	}
+	reset();
+    //run();
+    // startTime();
 }, false);
+
+function gameIsRunning(){
+	var isRunning = JSON.parse(localStorage.getItem('isRunning'));
+	if(isRunning === true){
+		return true;
+	}
+	else{
+		return false;
+	}
+}
 
 function startGame(){
 	//Create game stage
-	if(confirm("Are you sure you want to quit your current game?")){
-		reset();
-	    run();
-	    startTime();
+	if(gameIsRunning()){
+		var result = confirm("Are you sure you want to quit your current game?");
+		if (result === false){
+			return false;
+		}
 	}
+	reset();
+	run();
+	startTime();
 }
 
 function resetHighScore(){
@@ -49,13 +67,13 @@ function checkIfSetAlert(){
 	var results = checkIfSet();
 	if(results !== false){
 		results = results.join("\n");
+		alert(results);
 	}
 	else{
 		alert("No Match... resetting stage");
 		resetWithoutPoints();
 		run();
 	}
-	alert(results);
 }
 
 function checkIfSet(){
@@ -75,6 +93,23 @@ function checkIfSet(){
 	
 };
 
+function addPoints(num){
+	var points = JSON.parse(localStorage.getItem('points'));
+	points += num;
+	document.getElementById('points').innerHTML = points;
+	localStorage.setItem('points', JSON.stringify(points));
+}
+
+function subtractPoints(num){
+	var points = JSON.parse(localStorage.getItem('points'));
+	points -= num;
+	if(points < 0){
+		points = 0;
+	}
+	document.getElementById('points').innerHTML = points;
+	localStorage.setItem('points', JSON.stringify(points));
+}
+
 // function setUserTime(){
 	// var time_mmss = document.getElementById('usr_time').value;
 	// var seconds = convert_mmss_to_secs(time_mmss);
@@ -85,13 +120,21 @@ function checkIfSet(){
 // }
 
 function setUserTime(){
-	reset();
-	var response = prompt("Please enter your desired duration", "mm:ss");
-	if (response != null) {
-		var secs = convert_mmss_to_secs(response);
-	    localStorage.setItem('usr_time',JSON.stringify(secs));
+	if(gameIsRunning()){
+		var quitBool = confirm("Are you sure you want to quit your current game?");
+		if(quitBool === false){
+			return false;
+		}
 	}
-	return response;
+	var response = prompt("Please enter your desired duration", "mm:ss");
+	if(response === false || response === null){
+		return false;
+	}
+	var secs = convert_mmss_to_secs(response);
+    localStorage.setItem('usr_time',JSON.stringify(secs));
+	reset();
+	run();
+	startTime();
 }
 
 function convert_mmss_to_secs(myStr){
@@ -146,6 +189,7 @@ function resetStageSlots(){
 // }
 
 function reset(){
+	localStorage.setItem('isRunning', JSON.stringify(false));
 	var time = JSON.parse(localStorage.getItem('timer'));
 	//Stop timer
 	localStorage.removeItem('selectedCanvases');
@@ -164,7 +208,7 @@ function reset(){
 	//Delete click event
 	deleteClickEvent();
 	//Set HTML elements
-	document.getElementById('cards_left').innerHTML = 81;
+	// document.getElementById('cards_left').innerHTML = 81;
 	document.getElementById('points').innerHTML = 0;
 	document.getElementById('gameStage').innerHTML = "";
 	//Reset stage
@@ -185,7 +229,7 @@ function resetWithoutPoints(){
 	//Delete click event
 	deleteClickEvent();
 	//Set HTML elements
-	document.getElementById('cards_left').innerHTML = 81;
+	// document.getElementById('cards_left').innerHTML = 81;
 	document.getElementById('gameStage').innerHTML = "";
 	//Reset stage
 	resetStageSlots();
@@ -200,6 +244,7 @@ function deleteClickEvent(){
 }
 
 function run(){
+	localStorage.setItem('isRunning', JSON.stringify(true));
 	//Start Game
 	var myDeck = JSON.parse(localStorage.deck);
 	createNewFrontCanvas();
@@ -244,29 +289,44 @@ function compare(){
 }
 
 function gameEnds(){
-	alert("Game Over!");
-        	highScore();
-        	alert('Press OK to Reset and Play Again');
-        	reset();
+	var time = JSON.parse(localStorage.getItem('timer'));
+	localStorage.setItem('isRunning', JSON.stringify(false));
+	var bool = highScore();
+	if(bool === false){
+		if(confirm("Game Over!\nPress OK to Reset and Play Again")){
+			reset();
         	run();
         	startTime();
-        	clearInterval(interval);
+    	}
+    }
+    else{
+    	if(confirm("NEW HIGH SCORE!!!!\nPlease Press OK to Reset and Play Again")){
+			reset();
+        	run();
+        	startTime();
+    	}
+    	document.getElementById('high_score').innerHTML = newHighScore;
+    }
+    clearInterval(time);
 }
 
 function highScore(){
-	var gotNewHighScore = checkNewHighScore();
-	if(gotNewHighScore){
-		alert("NEW HIGH SCORE!!!!");
+	var newHighScore = checkNewHighScore();
+	localStorage.setItem('points', JSON.stringify(0));
+	if(newHighScore !== false){
+		// alert("NEW HIGH SCORE!!!!\nPlease Press OK to Reset and Play Again");
+		// document.getElementById('high_score').innerHTML = newHighScore;
+		return true;
 	}
+	return false;
 } 
 
 function checkNewHighScore(){
 	var points = JSON.parse(localStorage.getItem('points'));
-	localStorage.setItem('points', JSON.stringify(0));
 	var highScore = JSON.parse(localStorage.getItem('high_score'));
 	if(highScore < points){
 		localStorage.setItem('high_score', JSON.stringify(points));
-		return true;
+		return points;
 	};
 	return false;
 }

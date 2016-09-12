@@ -1,69 +1,83 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="utf-8">
-
-		<!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame
-		Remove this if you use the .htaccess -->
-		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-
-		<title>main_ui</title>
-		<meta name="description" content="">
-		<meta name="author" content="Andrew">
-
-		<meta name="viewport" content="width=device-width; initial-scale=1.0">
-
-		<!-- Replace favicon.ico & apple-touch-icon.png in the root of your domain and delete these references -->
-		<link rel="shortcut icon" href="/favicon.ico">
-		<link rel="apple-touch-icon" href="/apple-touch-icon.png">
-			<div id = "buttons">
-				<button id = "b1" onclick="checkIfSetAlert()">Check if sets exist</button>
-				<button id = "b2" onclick="setUserTime()">Set Time Duration</button>
+<head>
+	<meta charset="utf-8">
+	<!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame
+	Remove this if you use the .htaccess -->
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<title>main_ui</title>
+	<meta name="description" content="">
+	<meta name="author" content="Andrew">
+	<meta name="viewport" content="width=device-width; initial-scale=1.0">
+	<!-- Replace favicon.ico & apple-touch-icon.png in the root of your domain and delete these references -->
+	<link rel="shortcut icon" href="/favicon.ico">
+	<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+	<link rel="stylesheet" type="text/css" href="resources/css/game-style.css">
+		<!-- <label for="checkbox1" onclick="disableImages();">
+				<input type="checkbox" id="checkbox1" name="checkbox1" title="Disable Images">
+				Disable Images
+		</label> -->
+</head>
+<body>
+	<div>
+		<header>
+			<h1>Digital Set</h1>
+		</header>
+		<nav>
+			<p>
+				High Score
+			</p>
+			<p id = "high_score">0</p>
+			<p>
+				&copy; Copyright  by Andrew Hsu
+			</p>
+			<!-- <div>Game ends in: <span id="time"></span> mm:ss!</div> -->
+			<p>
+				<!-- Remaining Cards
+			</p>
+			<p id = "cards_left">81</p>
+			<p>
+				Points
+			</p>
+			<p id = "points"></p>
+			<p> -->
+				<!-- High Score
 				<button id = "b3" onclick="resetHighScore()">Reset High Score</button>
+			</p>
+			<p id = "high_score">0</p> -->
+			
+		</nav>
+		<div id = "buttons" class="btnsDiv">
+				<button id = "b2" class='btn' onclick="setUserTime()">Set Duration</button>
+				<button id = "b3" class='btn200' onclick="resetHighScore()">Reset High Score</button>
 			</div>
-			<!-- <label for="checkbox1" onclick="disableImages();">
-  					<input type="checkbox" id="checkbox1" name="checkbox1" title="Disable Images">
-  					Disable Images
-			</label> -->
-	</head>
-
-	<body>
-		<div>
-			<header>
-				<h1>Digital Set</h1>
-			</header>
-			<nav>
-				<p>
-					&copy; Copyright  by Andrew Hsu
-				</p>
-				<div>Game ends in: <span id="time"></span> mm:ss!</div>
-				<p>
-					Remaining Cards
-				</p>
-				<p id = "cards_left">81</p>
-				<p>
-					Points
-				</p>
-				<p id = "points"></p>
-				<p>
-					High Score
-				</p>
-				<p id = "high_score">0</p>
-			</nav>
-			<div id = "canvases" style="position: absolute;"></div>
-			<div id = "buttons1">
-				<button id ="b4" onclick="startGame()">Start Game</button>
-				<button id = "b5" onclick="compare()">Compare Cards</button>
+		<div id = "canvases" style="position: absolute;"></div>
+		<div id = "gameButtons" class="btnDivH">
+			<button id ="b4" class="btnStart" onclick="startGame()">Start</button>
+			<div class='txtDivH'>
+				<span id="time" class="spn"></span></p>
+			</div> 
+			<div class='txtDivH'>
+				<p class="txtDisp" id = "points"></p>
+			</div> 
+		</div>
+		<br>
+		<br>
+		<div id = "gameStage" style="position: absolute;"></div>
+		<div id = "gameButtons1" class="btnCheckDivH" style="position: absolute;">
+			<button id ="b4" class="btnCheck" onclick="compare()">Check</button>
+			<div class="btnHintDiv">
+			<button id ="b5" class="btnHint" onClick="checkIfSetAlert()">Hint</button>
 			</div>
-			<div id = gameStage style="position: absolute;"></div>	
-		</div>	
-		<script src="resources/js/initializeDeck.js"></script>
-		<script src="resources/js/controller.js"></script>
-		<script src="resources/js/html-interface.js"></script>
-		<script src="resources/js/DrawingCards.js"></script>
-		<script src="resources/js/initializeStage.js"></script>
-		<script src="resources/js/setCheck.js"></script>
-	</body>
+		</div>
+	</div>	
+	<script src="resources/js/initializeDeck.js"></script>
+	<script src="resources/js/controller.js"></script>
+	<script src="resources/js/html-interface.js"></script>
+	<script src="resources/js/DrawingCards.js"></script>
+	<script src="resources/js/initializeStage.js"></script>
+	<script src="resources/js/setCheck.js"></script>
+</body>
 	
 	
 </html>
