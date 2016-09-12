@@ -3,20 +3,70 @@
  */
 function startGame(){
 	//Create game stage
-	if(JSON.parse(localStorage.getItem('start')) === undefined){
+	if(JSON.parse(localStorage.getItem('start')) === true){
+		localStorage.setItem('start', JSON.stringify(false));
+		reset();
+		localStorage.setItem('usr_time', JSON.stringify(30));
+		//setUserTime();
 		run();
+		startTime();
+		
 	}
 	else{
 		reset();
 		run();
+		startTime();
 	}
 }
+
+function myCombinations(){
+	var myCombos = [];
+	for(var i = 0; i < 7; i++){
+		for(var j = 1; j < 8; j++){
+			for(var k = 2; k < 9; k++){
+				if(j > i && k > j){
+					myCombos.push([i, j, k]);
+				}
+			};
+		};
+	};
+	return myCombos;
+}
+
+function checkIfSetAlert(){
+	var results = checkIfSet();
+	if(results !== false){
+		results = results.join("\n");
+	}
+	alert(results);
+}
+
+function checkIfSet(){
+	var uniqueCombos = myCombinations();
+	var results = [];
+	uniqueCombos.forEach(function(combination){
+		if(compareCards(combination) === true){
+			results.push(combination);
+		};
+	});
+	if (results.length !== 0){
+		return results;
+	}
+	else{
+		return false;
+	}
+	
+};
 
 // function setUserTime(){
 	// var time_mmss = document.getElementById('usr_time').value;
 	// var seconds = convert_mmss_to_secs(time_mmss);
 	// localStorage.setItem('usr_time', JSON.stringify(seconds));
 // }
+// function checkIfTimeExists(){
+	// if(JSON.parse(localStorage.getItem('start')) === true
+// }
+
 function setUserTime(){
 	var response = prompt("Please enter your desired duration", "mm:ss");
 	if (response != null) {
@@ -83,7 +133,7 @@ function reset(){
 	localStorage.removeItem('discardPile');
 	localStorage.removeItem('cards_left');
 	localStorage.removeItem('points');
-	localStorage.removeItem('start');
+	//localStorage.removeItem('start');
 	clearInterval(time);
 	// preserveHighScore();
 	// preserveUserTime();
@@ -92,7 +142,7 @@ function reset(){
 	localStorage.setItem('discardPile', JSON.stringify([]));
 	localStorage.setItem('cards_left', JSON.stringify(81));
 	localStorage.setItem('points', JSON.stringify(0));
-	localStorage.setItem('start', JSON.stringify(true));
+	
 	//Set HTML elements
 	document.getElementById('cards_left').innerHTML = 81;
 	document.getElementById('points').innerHTML = 0;
@@ -117,7 +167,6 @@ function run(){
 	var myDeck = JSON.parse(localStorage.deck);
 	createNewFrontCanvas();
 	assignRandomCards();
-	startTime();
 }
 
 function assignRandomCards(reset){
@@ -146,13 +195,13 @@ function assignRandomCards(reset){
 }
 
 function compare(){
-	if(compareCards() === true){
+	if(compareStagedCards() === true){
 		//alert(true);
 		console.log("Congrats, you've found one!");
 		isMatch();
 	}
 	else{
-		alert(compareCards());
+		alert(compareStagedCards());
 	}
 }
 
@@ -206,3 +255,7 @@ function startTime () {
     var display = document.querySelector('#time');
     startTimer(user_time, display);
 };
+
+function setFinder(){
+	
+}

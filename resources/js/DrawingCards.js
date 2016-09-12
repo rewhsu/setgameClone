@@ -68,10 +68,14 @@ function isMatch(){
 	document.getElementById('high_score').innerHTML = highScore;
 }
 
-function compareCards(){
+function compareStagedCards(){
+	var selectedCanvases = JSON.parse(localStorage.getItem('selectedCanvases'));
+	return compareCards(selectedCanvases);
+}
+
+function compareCards(canvases){
 	var stageSlots = JSON.parse(localStorage.getItem('stageSlots'));
 	var cardArr = [];
-	var selectedCanvases = JSON.parse(localStorage.getItem('selectedCanvases'));
   	var noMatch = "";
   	var allProps = {
     	colors: [],
@@ -79,7 +83,7 @@ function compareCards(){
     	numbers: [],
     	shapes: [],
   	};
-	  selectedCanvases.forEach(function(index) {
+	  canvases.forEach(function(index) {
 	  	var card = getCardById(stageSlots[index]);
 	    if (allProps.colors.indexOf(card.color) === -1) {
 	      allProps.colors.push(card.color);
