@@ -11,18 +11,27 @@ var config = {
     filename: 'bundle.js'
   },
   module: {
-    rules: [
+    loaders: [
       {
         test: /\.js$/,
         include: APP_DIR,
         exclude: /(node_modules|bower_components)/,
         use: {
           loader: 'babel-loader',
-          // options: {
-          //   presets: ['env']
-          // }
         }
-      }
+      },
+      {
+        test: /\.css$/,
+        loader: 'style-loader'
+      }, 
+      {
+        test: /\.css$/,
+        loader: 'css-loader',
+        query: {
+          modules: true,
+          localIdentName: '[name]__[local]___[hash:base64:5]'
+        },
+      },
     ]
   },
 };
