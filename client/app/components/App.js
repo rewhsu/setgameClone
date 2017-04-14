@@ -1,6 +1,6 @@
 var React = require('react');
 import Legacy from './Legacy';
-import Card from './Card/Card.js'
+import Cards from './Cards/Cards.js'
 
 export default class App extends React.Component {
   render() {
@@ -8,7 +8,7 @@ export default class App extends React.Component {
       <div>
         <p>Set Game Goes Here</p>
         <Legacy />
-        <Card />
+        <Cards />
       </div>
     );
   }
