@@ -45,6 +45,14 @@ Gameplay Brainstorm
       - Actual set game clone
 
 --------
+Questions
+--------
+- Do I actually need a real deck? What purpose does it serve... natural balance and if I want to do multiplayer, it's proven to be fun -- sounds like a yes
+- How do I want to deal with # of community cards? Real game lets you add rows if no matches are found-- but why deal with it? Better solution is to never deal a no-match scenario.
+  - Near the end of the game, there will eventually be a no-match scenario/uneven cards... who cares, just avoid matches until there are no possibilities left. Depends how fast algo is.
+
+--------
 MVP
 --------
-
+- Get existing logic working so I can try to time it and explicitly make improvements
+- Refactor to efficient code
