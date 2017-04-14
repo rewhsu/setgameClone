@@ -3,6 +3,10 @@ import styles from './Cards.css';
 import Card from '../Card/Card.js'
 
 export default class Cards extends React.Component {
+  constructor(props) {
+    super(props);
+    this.cards = [];
+  }
   addCard(index) {
     return (
       <div className={styles.cardContainer}>
@@ -11,16 +15,17 @@ export default class Cards extends React.Component {
     )
   }
   initializeStage() {
-    var cards = [];
     for (var i = 0; i < 9; i++) {
-      cards.push(this.addCard(i));
+      this.cards.push(this.addCard(i));
     }
-    return cards;
+  }
+  componentWillMount() {
+    this.initializeStage();
   }
   render() {
     return (
       <div className={styles.stage}>
-        {this.initializeStage()}
+        {this.cards}
       </div>
     );
   }
