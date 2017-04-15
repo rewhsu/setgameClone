@@ -6,6 +6,7 @@ export default class Cards extends React.Component {
   constructor(props) {
     super(props);
     this.cards = [];
+    this.stage = props.stage;
   }
   addCard(index) {
     return (
@@ -25,6 +26,7 @@ export default class Cards extends React.Component {
   render() {
     return (
       <div className={styles.stage}>
+      <div>{this.stage}</div>
         {this.cards}
       </div>
     );
