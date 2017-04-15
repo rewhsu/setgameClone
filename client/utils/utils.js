@@ -5,8 +5,8 @@ export const initializeStage = function() {
   for (var i = 0; i < 9; i++) {
     stage.push({
       stageId: i,
-      cardId: null,
       isSelected: false,
+      card: null,
     });
   }
   return stage;

@@ -5,10 +5,10 @@ export const toggleCard = (stageId) => {
   }
 }
 
-export const setCard = (stageId, cardId) => {
+export const setCard = (stageId, card) => {
   return {
     type: 'SET_CARD',
     stageId,
-    cardId,
+    card,
   }
 }

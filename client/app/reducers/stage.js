@@ -29,7 +29,7 @@ const card = (state = {}, action) => {
         return state;
       }
       return Object.assign({}, state, {
-        cardId: action.cardId,
+        card: action.card,
       })
     default:
       return state

@@ -17,7 +17,8 @@ export default class Cards extends React.Component {
   componentWillReceiveProps(nextProps) {
     if (nextProps.stage !== this.state.stage) {
       this.setState({stage: nextProps.stage});
-      console.log('receiving props', this.state.stage);
+      this.forceUpdate();
+      console.log('receiving props for Cards', nextProps.stage);
     }
   }
   renderCard(data) {
@@ -30,18 +31,18 @@ export default class Cards extends React.Component {
   dealCard(index) {
     var deck = this.state.deck;
     var rand = deck[Math.floor(Math.random() * deck.length)];
-    this.setCard(index, rand.id);
+    this.setCard(index, rand);
   }
   dealCards() {
     for (var i = 0; i < 9; i++) {
       this.dealCard(i);
     }
   }
-  componentDidMount() {
+  componentWillMount() {
     this.dealCards();
   }
   render() {
-    console.log('rendering', this.state);
+    console.log('rendering Cards', this.state);
     return (
       <div className={styles.stage}>
         {this.state.stage.map(cell => (
