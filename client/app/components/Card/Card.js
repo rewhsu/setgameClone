@@ -13,7 +13,7 @@ var Card = ({ data, toggleCard }) =>
     {/*<p>stageId: {data.stageId}</p>
     <p>cardId: {data.cardId}</p>
     {data.isSelected ? 'selected' : ''}*/}
-    <Shape numObjects={3}/>
+    <Shape data={data} />
   </div>;
 
 export default Card;
