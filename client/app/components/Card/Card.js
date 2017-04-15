@@ -1,10 +1,11 @@
 import React from 'react';
 import styles from './Card.css';
 
-var Card = (props) => (
+var Card = ({ data }) =>
   <div className={styles.cell}>
-    {props.id}
-  </div>
-)
+    <p>stageId: {data.stageId}</p>
+    <p>cardId: {data.cardId}</p>
+    <p>isSelected: {data.isSelected}</p>
+  </div>;
 
 export default Card;

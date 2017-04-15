@@ -29,9 +29,10 @@ function createDeck(){
     }
   }
   localStorage.setItem('deck', JSON.stringify(cardArray));
-  cardArray.forEach(function(cardObj){
-    //Draw our card after processing object properties
-  });
+  // cardArray.forEach(function(cardObj){
+  //   //Draw our card after processing object properties
+  // });
+  return cardArray;
 }; 
 
 export default createDeck;

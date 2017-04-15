@@ -5,14 +5,12 @@ import { createStore } from 'redux';
 import setApp from './reducers/index';
 
 import App from './components/App';
+import { initializeStage } from '../utils/utils';
 
 var store = createStore(
-  setApp, 
-  {
-    stage: [false, false, false, false, false, false, false, false, false]
-  }
+  setApp,
+  { stage: initializeStage() },
 );
-console.log(store.getState());
 ReactDOM.render(
   <Provider store={store}>
     <App/>

@@ -1,6 +1,14 @@
-export const toggleCard = (id) => {
+export const toggleCard = (stageId) => {
   return {
     type: 'TOGGLE_CARD',
-    id: id,
+    stageId,
+  }
+}
+
+export const setCard = (stageId, cardId) => {
+  return {
+    type: 'SET_CARD',
+    stageId,
+    cardId,
   }
 }
