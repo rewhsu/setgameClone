@@ -22,7 +22,7 @@ const card = (state = {}, action) => {
         return state;
       }
       return Object.assign({}, state, {
-        isSelected: !isSelected
+        isSelected: !state.isSelected
       })
     case 'SET_CARD':
       if (state.stageId !== action.stageId) {

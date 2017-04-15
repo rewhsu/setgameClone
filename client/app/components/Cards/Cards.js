@@ -12,6 +12,7 @@ export default class Cards extends React.Component {
       deck: props.deck,
     }
     this.setCard = props.setCard;
+    this.toggleCard = props.toggleCard.bind(this);
   }
   componentWillReceiveProps(nextProps) {
     if (nextProps.stage !== this.state.stage) {
@@ -22,7 +23,7 @@ export default class Cards extends React.Component {
   renderCard(data) {
     return (
       <div className={styles.cardContainer}>
-        <Card data={data}/>
+        <Card data={data} toggleCard={this.toggleCard} />
       </div>
     )
   }
