@@ -3,6 +3,8 @@ import styles from './Card.css';
 import Rectangle from '../Rectangle/Rectangle';
 import Circle from '../Circle/Circle';
 import Triangle from '../Triangle/Triangle';
+import Shape from '../Shape/Shape';
+
 
 
 
@@ -11,7 +13,7 @@ var Card = ({ data, toggleCard }) =>
     {/*<p>stageId: {data.stageId}</p>
     <p>cardId: {data.cardId}</p>
     {data.isSelected ? 'selected' : ''}*/}
-    <Triangle numObjects={3}/>
+    <Shape numObjects={3}/>
   </div>;
 
 export default Card;
