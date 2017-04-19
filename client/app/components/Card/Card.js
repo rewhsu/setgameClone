@@ -1,8 +1,5 @@
 import React from 'react';
 import styles from './Card.css';
-import Rectangle from '../Rectangle/Rectangle';
-import Circle from '../Circle/Circle';
-import Triangle from '../Triangle/Triangle';
 import Shape from '../Shape/Shape';
 
 var Card = ({ data, toggleCard }) =>
