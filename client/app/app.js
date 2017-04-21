@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import setApp from './reducers/index';
 
-import App from './components/App';
+import App from './components/App/App';
 import { initializeStage, getShuffledDeck } from '../utils/utils';
 
 var store = createStore(
