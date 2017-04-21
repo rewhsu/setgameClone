@@ -33,3 +33,10 @@ export const addPts = (points) => {
     points,
   }
 }
+
+export const updateLog = (text) => {
+  return {
+    type: 'UPDATE_LOG',
+    text,
+  }
+}

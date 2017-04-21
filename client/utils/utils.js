@@ -29,6 +29,54 @@ export const getShuffledDeck = () => {
   return deck;
 }
 
-export const validateSelection = (selection) => {
-  
+export const validateSelection = (selection, deck) => {
+  return compareCards(selection, deck);
 }
+
+// From legacy code
+function compareStagedCards(){
+  var selectedCanvases = JSON.parse(localStorage.getItem('selectedCanvases'));
+  return compareCards(selectedCanvases);
+}
+
+function compareCards(selection, deck){
+  // var stageSlots = JSON.parse(localStorage.getItem('stageSlots'));
+  var cardArr = [];
+    var noMatch = "";
+    var allProps = {
+      colors: [],
+      fills: [],
+      numbers: [],
+      shapes: [],
+    };
+    selection.forEach(function(index) {
+      // var card = getCardById(stageSlots[index]);
+      if (allProps.colors.indexOf(deck[index].color) === -1) {
+        allProps.colors.push(deck[index].color);
+      }
+      if (allProps.fills.indexOf(deck[index].fill) === -1) {
+        allProps.fills.push(deck[index].fill);
+      }
+      if (allProps.numbers.indexOf(deck[index].number) === -1) {
+        allProps.numbers.push(deck[index].number);
+      }
+      if (allProps.shapes.indexOf(deck[index].shape) === -1) {
+        allProps.shapes.push(deck[index].shape);
+      }
+    });
+    for (var myProp in allProps) {
+      var check = allProps[myProp];
+      if (allProps.hasOwnProperty(myProp)) {
+        if (allProps[myProp].length % 2 === 0) {
+          noMatch += ("Mismatched " + myProp + ": " + allProps[myProp] + "\n");
+        }
+      }
+    }
+    console.log(noMatch);
+    if (noMatch.length === 0) {
+      return true;
+    } 
+    else {
+      return noMatch;
+    }
+};
