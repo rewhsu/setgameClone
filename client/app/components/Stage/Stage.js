@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './Stage.css';
 import Card from '../Card/Card.js';
 
-export default class Cards extends React.Component {
+export default class Stage extends React.Component {
   constructor(props) {
     super(props);
     this.toggleCard = props.toggleCard.bind(this);
