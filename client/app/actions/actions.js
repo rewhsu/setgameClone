@@ -5,10 +5,22 @@ export const toggleCard = (stageId) => {
   }
 }
 
-export const setCard = (stageId, card) => {
+export const dealCard = (stageId, card) => {
   return {
-    type: 'SET_CARD',
+    type: 'DEAL_CARD',
     stageId,
     card,
+  }
+}
+
+export const resetDeck = () => {
+  return {
+    type: 'RESET_DECK',
+  }
+}
+
+export const addDeck = () => {
+  return {
+    type: 'ADD_DECK',
   }
 }

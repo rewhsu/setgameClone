@@ -1,12 +1,13 @@
 import Cards from '../components/Cards/Cards.js'
 import { connect } from 'react-redux';
-import { toggleCard, setCard } from '../actions/actions';
-import createDeck from '../../utils/createDeck';
+import { toggleCard, dealCard, addDeck, resetDeck } from '../actions/actions';
+import { createDeck, shuffleDeck } from '../../utils/createDeck';
 
 var mapStateToProps = (state) => {
   return {
     stage: state.stage,
-    deck: createDeck(),
+    deck: state.deck,
+    deckIndex: state.deckIndex,
   }
 }
 
@@ -15,9 +16,15 @@ var mapDispatchToProps = (dispatch) => {
     toggleCard(stageId, isSelected) {
       dispatch(toggleCard(stageId, isSelected));
     },
-    setCard(stageId, card) {
-      dispatch(setCard(stageId, card));
-    }
+    dealCard(stageId, card) {
+      dispatch(dealCard(stageId, card));
+    },
+    resetDeck() {
+      dispatch(resetDeck());
+    },
+    addDeck() {
+      dispatch(addDeck());
+    },
   }
 }
 

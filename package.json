@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "webpack -d --watch",
     "build": "webpack -p",
-    "start": "live-server"
+    "start": "live-server",
+    "test": "./node_modules/.bin/mocha --reporter spec"
   },
   "repository": {
     "type": "git",
@@ -33,6 +34,8 @@
     "webpack": "^2.3.3"
   },
   "devDependencies": {
-    "live-server": "^1.2.0"
+    "chai": "^3.5.0",
+    "live-server": "^1.2.0",
+    "mocha": "^3.2.0"
   }
 }

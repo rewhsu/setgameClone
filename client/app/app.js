@@ -5,11 +5,14 @@ import { createStore } from 'redux';
 import setApp from './reducers/index';
 
 import App from './components/App';
-import { initializeStage } from '../utils/utils';
+import { initializeStage, getShuffledDeck } from '../utils/utils';
 
 var store = createStore(
   setApp,
-  { stage: initializeStage() },
+  { 
+    deck: getShuffledDeck(),
+    stage: initializeStage(),
+   },
 );
 ReactDOM.render(
   <Provider store={store}>

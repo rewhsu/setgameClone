@@ -6,7 +6,7 @@ export const stage = (state = [], action) => {
       return state.map(t =>
         card(t, action)
       )
-    case 'SET_CARD':
+    case 'DEAL_CARD':
       return state.map(t =>
         card(t, action)
       )
@@ -24,7 +24,7 @@ const card = (state = {}, action) => {
       return Object.assign({}, state, {
         isSelected: !state.isSelected
       })
-    case 'SET_CARD':
+    case 'DEAL_CARD':
       if (state.stageId !== action.stageId) {
         return state;
       }

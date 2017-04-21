@@ -6,46 +6,31 @@ import { randomCard } from '../../../utils/utils';
 export default class Cards extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      cards: [],
-      stage: props.stage,
-      deck: props.deck,
-    }
-    this.setCard = props.setCard;
     this.toggleCard = props.toggleCard.bind(this);
+    this.addDeck = props.addDeck;
   }
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.stage !== this.state.stage) {
-      this.setState({stage: nextProps.stage});
-      this.forceUpdate();
-      console.log('receiving props for Cards', nextProps.stage);
-    }
-  }
+
   renderCard(data) {
     return (
       <div className={styles.cardContainer}>
-        <Card data={data} toggleCard={this.toggleCard} />
+        <Card data={data}/>
       </div>
     )
   }
-  dealCard(index) {
-    var deck = this.state.deck;
-    var rand = deck[Math.floor(Math.random() * deck.length)];
-    this.setCard(index, rand);
-  }
-  dealCards() {
+  dealInitialCards(cards) {
     for (var i = 0; i < 9; i++) {
-      this.dealCard(i);
+      this.props.dealCard(i, this.props.deck[i]);
     }
   }
   componentWillMount() {
-    this.dealCards();
+    this.props.resetDeck();
+    this.dealInitialCards();
   }
   render() {
-    console.log('rendering Cards', this.state);
+    console.log('rendering Cards', this.props);
     return (
       <div className={styles.stage}>
-        {this.state.stage.map(cell => (
+        {this.props.stage.map(cell => (
           this.renderCard(cell)
         ))}
       </div>
