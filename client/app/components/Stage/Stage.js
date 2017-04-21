@@ -1,7 +1,6 @@
 import React from 'react';
-import styles from './Cards.css';
+import styles from './Stage.css';
 import Card from '../Card/Card.js';
-import { randomCard } from '../../../utils/utils';
 
 export default class Cards extends React.Component {
   constructor(props) {

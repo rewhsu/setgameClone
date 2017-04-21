@@ -1,4 +1,4 @@
-import Cards from '../components/Cards/Cards.js'
+import Stage from '../components/Stage/Stage.js'
 import { connect } from 'react-redux';
 import { toggleCard, dealCard, addDeck, resetDeck } from '../actions/actions';
 import { createDeck, shuffleDeck } from '../../utils/createDeck';
@@ -16,7 +16,7 @@ var mapDispatchToProps = (dispatch) => {
   return {
     toggleCard(stageId, newState, selections) {
       if (newState && selections.length >= 3) {
-          alert('error');
+          alert('Already 3 Cards Selected');
       } else {
         dispatch(toggleCard(stageId, newState, selections));
       }
@@ -33,9 +33,9 @@ var mapDispatchToProps = (dispatch) => {
   }
 }
 
-var CardsContainer = connect(
+var StageContainer = connect(
   mapStateToProps,
   mapDispatchToProps
-)(Cards)
+)(Stage)
 
-export default CardsContainer;
+export default StageContainer;
