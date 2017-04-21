@@ -8,14 +8,18 @@ var mapStateToProps = (state) => {
     stage: state.stage,
     deck: state.deck,
     deckIndex: state.deckIndex,
-    numSelected: state.numSelected,
+    selections: state.selections,
   }
 }
 
 var mapDispatchToProps = (dispatch) => {
   return {
-    toggleCard(stageId, newState, numSelected) {
-      dispatch(toggleCard(stageId, newState, numSelected));
+    toggleCard(stageId, newState, selections) {
+      if (newState && selections.length >= 3) {
+          alert('error');
+      } else {
+        dispatch(toggleCard(stageId, newState, selections));
+      }
     },
     dealCard(stageId, card) {
       dispatch(dealCard(stageId, card));

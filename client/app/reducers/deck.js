@@ -12,7 +12,7 @@ export const deck = (state = [], action) => {
 }
 
 export const deckIndex = (state = 0, action) => {
-  console.log('deal card deck index', state, action);
+  console.log('reducer, deck index', state, action);
   switch (action.type) {
     case 'DEAL_CARD':
       return state + 1;
