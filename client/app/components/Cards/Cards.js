@@ -9,11 +9,10 @@ export default class Cards extends React.Component {
     this.toggleCard = props.toggleCard.bind(this);
     this.addDeck = props.addDeck;
   }
-
   renderCard(data) {
     return (
       <div className={styles.cardContainer}>
-        <Card data={data}/>
+        <Card data={data} dealCard={this.props.dealCard} toggleCard={this.props.toggleCard}/>
       </div>
     )
   }

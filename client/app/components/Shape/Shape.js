@@ -72,10 +72,22 @@ export default class Shape extends React.Component {
       }
     }
   }
+  drawSelector(isSelected) {
+    if (isSelected) {    
+      var color = 'blue';
+      var offset = 6;
+      var width = this.state.canvasWidth - offset;
+      var height = this.state.canvasHeight - offset;
+      var ctx = this.refs.canvas.getContext('2d');
+      ctx.strokeStyle = color;
+      ctx.strokeRect(this.state.canvasWidth/2 - width/2, this.state.canvasHeight/2 - height/2, width, height);
+    }
+  }
   updateCanvas() {
     console.log('updating canvas', this.state);
     this.fitToContainer();
     this.drawLinesAndFill();
+    this.drawSelector(this.props.data.isSelected);
   }
   fitToContainer() {
     var canvas = this.refs.canvas;
