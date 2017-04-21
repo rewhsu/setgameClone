@@ -84,7 +84,7 @@ export default class Shape extends React.Component {
     }
   }
   updateCanvas() {
-    console.log('updating canvas', this.state);
+    // console.log('updating canvas', this.state);
     this.fitToContainer();
     this.drawLinesAndFill();
     this.drawSelector(this.props.data.isSelected);

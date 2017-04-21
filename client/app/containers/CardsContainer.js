@@ -8,13 +8,14 @@ var mapStateToProps = (state) => {
     stage: state.stage,
     deck: state.deck,
     deckIndex: state.deckIndex,
+    numSelected: state.numSelected,
   }
 }
 
 var mapDispatchToProps = (dispatch) => {
   return {
-    toggleCard(stageId) {
-      dispatch(toggleCard(stageId));
+    toggleCard(stageId, newState, numSelected) {
+      dispatch(toggleCard(stageId, newState, numSelected));
     },
     dealCard(stageId, card) {
       dispatch(dealCard(stageId, card));

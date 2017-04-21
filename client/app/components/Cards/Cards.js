@@ -12,7 +12,7 @@ export default class Cards extends React.Component {
   renderCard(data) {
     return (
       <div className={styles.cardContainer}>
-        <Card data={data} dealCard={this.props.dealCard} toggleCard={this.props.toggleCard}/>
+        <Card data={data} numSelected={this.props.numSelected} dealCard={this.props.dealCard} toggleCard={this.props.toggleCard}/>
       </div>
     )
   }

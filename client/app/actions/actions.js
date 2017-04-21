@@ -1,7 +1,9 @@
-export const toggleCard = (stageId) => {
+export const toggleCard = (stageId, newState, numSelected) => {
   return {
     type: 'TOGGLE_CARD',
     stageId,
+    newState,
+    numSelected,
   }
 }
 
