@@ -1,6 +1,6 @@
 import createDeck from './createDeck';
 
-export const initializeStage = function() {
+export const initializeStage = () => {
   var stage = [];
   for (var i = 0; i < 9; i++) {
     stage.push({
@@ -12,12 +12,12 @@ export const initializeStage = function() {
   return stage;
 }
 
-export const makeDeck = function() {
+export const makeDeck = () => {
   var deck = createDeck();
   return deck;
 }
 
-export const getShuffledDeck = function() {
+export const getShuffledDeck = () => {
   var deck = makeDeck();
   for (var i = deck.length - 1; i > 0; i--) {
     var temp = deck[i];
@@ -27,4 +27,8 @@ export const getShuffledDeck = function() {
   }
   console.log('deck', deck);
   return deck;
+}
+
+export const validateSelection = (selection) => {
+  
 }

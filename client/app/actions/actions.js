@@ -26,3 +26,10 @@ export const addDeck = () => {
     type: 'ADD_DECK',
   }
 }
+
+export const addPts = (points) => {
+  return {
+    type: 'ADD_POINTS',
+    points,
+  }
+}
